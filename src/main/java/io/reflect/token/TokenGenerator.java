@@ -1,6 +1,5 @@
 package io.reflect.token;
 
-import javax.crypto.ExemptionMechanismException;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.security.InvalidKeyException;
@@ -23,8 +22,7 @@ public class TokenGenerator {
             Mac mac = Mac.getInstance("HmacSHA256");
             SecretKeySpec key = new SecretKeySpec(secretKey.getBytes(), "HmacSHA256");
             mac.init(key);
-            String encoded = Base64.getEncoder().encodeToString(mac.doFinal(fullString.getBytes()));
-            return String.format("=2=%s", encoded);
+            return String.format("=2=%s", Base64.getEncoder().encodeToString(mac.doFinal(fullString.getBytes())));
         } catch (InvalidKeyException | NoSuchAlgorithmException e) {
             throw new Exception(e);
         }
