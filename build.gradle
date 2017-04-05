@@ -2,9 +2,6 @@ group 'io.reflect'
 version '0.1.0-SNAPSHOT'
 
 apply plugin: 'java'
-apply plugin: 'application'
-
-mainClassName = 'io.reflect.token.Main'
 
 repositories {
     mavenCentral()
