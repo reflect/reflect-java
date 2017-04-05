@@ -48,8 +48,7 @@ public class Parameter {
         this.anyValue = anyValue;
     }
 
-    @Override
-    public String toString() {
+    public String toJsonString() {
         Gson serializer = new GsonBuilder()
                 .disableHtmlEscaping()
                 .create();

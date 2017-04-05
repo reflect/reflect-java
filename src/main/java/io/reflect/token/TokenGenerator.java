@@ -1,16 +1,19 @@
 package io.reflect.token;
 
+import javax.crypto.ExemptionMechanismException;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.Base64;
 
 public class TokenGenerator {
-    public static String generate(String secretKey, Parameter[] params) {
+    public static String generate(String secretKey, Parameter[] params) throws Exception {
         String[] str = new String[params.length];
 
         for (int i = 0; i < params.length; i++) {
-            str[i] = params[i].toString();
+            str[i] = params[i].toJsonString();
         }
 
         Arrays.sort(str);
@@ -22,8 +25,8 @@ public class TokenGenerator {
             mac.init(key);
             String encoded = Base64.getEncoder().encodeToString(mac.doFinal(fullString.getBytes()));
             return String.format("=2=%s", encoded);
-        } catch (Exception e) {
-            return "ERROR";
+        } catch (InvalidKeyException | NoSuchAlgorithmException e) {
+            throw new Exception(e);
         }
     }
 }

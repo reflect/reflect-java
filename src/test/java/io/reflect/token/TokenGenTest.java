@@ -44,12 +44,16 @@ public class TokenGenTest {
 
     @Test
     public void testTokens() {
-        for (TestCase testCase : testCases) {
-            Assert.assertEquals(testCase.expectedTokenValue, TokenGenerator.generate(testCase.secretKey, testCase.parameters));
-        }
+        try {
+            for (TestCase testCase : testCases) {
+                Assert.assertEquals(testCase.expectedTokenValue, TokenGenerator.generate(testCase.secretKey, testCase.parameters));
+            }
 
-        for (TestCase testCase : failCases) {
-            Assert.assertNotEquals(testCase.expectedTokenValue, TokenGenerator.generate(testCase.secretKey, testCase.parameters));
+            for (TestCase testCase : failCases) {
+                Assert.assertNotEquals(testCase.expectedTokenValue, TokenGenerator.generate(testCase.secretKey, testCase.parameters));
+            }
+        } catch (Exception e) {
+            Assert.fail(e.getMessage());
         }
     }
 }
