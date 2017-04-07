@@ -13,7 +13,8 @@ public class Parameter {
         LESS_THAN("<"),
         GREATER_THAN_OR_EQUAL_TO(">="),
         LESS_THAN_OR_EQUAL_TO("<="),
-        CONTAINS("=~");
+        CONTAINS("=~"),
+        NOT_CONTAINS("!=~");
 
         private final String stringValue;
 
