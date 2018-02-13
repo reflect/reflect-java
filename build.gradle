@@ -1,5 +1,5 @@
 group 'io.reflect'
-version '0.1.0-SNAPSHOT'
+version '0.2.0-SNAPSHOT'
 
 apply plugin: 'java'
 
@@ -10,5 +10,11 @@ repositories {
 dependencies {
     testCompile 'junit:junit:4.12'
 
-    compile 'com.google.code.gson:gson:2.8.0'
+    compile 'com.nimbusds:nimbus-jose-jwt:4.23'
+    compile 'net.minidev:json-smart:1.3.1'
+}
+
+javadoc {
+    source = sourceSets.main.allJava
+    classpath = configurations.compile
 }
