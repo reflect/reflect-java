@@ -1,11 +1,14 @@
 package io.reflect.token;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
+import java.io.IOException;
 import java.util.Arrays;
 
-public class Parameter {
+import net.minidev.json.JSONAwareEx;
+import net.minidev.json.JSONObject;
+import net.minidev.json.JSONStreamAwareEx;
+import net.minidev.json.JSONStyle;
+
+public class Parameter implements JSONAwareEx, JSONStreamAwareEx {
     public enum Op {
         EQUALS("="),
         NOT_EQUALS("!="),
@@ -14,7 +17,7 @@ public class Parameter {
         GREATER_THAN_OR_EQUAL_TO(">="),
         LESS_THAN_OR_EQUAL_TO("<="),
         CONTAINS("=~"),
-        NOT_CONTAINS("!=~");
+        NOT_CONTAINS("!~");
 
         private final String stringValue;
 
@@ -49,13 +52,29 @@ public class Parameter {
         this.anyValue = anyValue;
     }
 
-    public String toJsonString() {
-        Gson serializer = new GsonBuilder()
-                .disableHtmlEscaping()
-                .create();
-        Object[] s = new Object[]{
-                this.field, this.op.toString(), this.value, this.anyValue
-        };
-        return serializer.toJson(s);
+    public String toJSONString() {
+        return toJSONObject().toJSONString();
+    }
+
+    public String toJSONString(JSONStyle compression) {
+        return toJSONObject().toJSONString(compression);
+    }
+
+    public void writeJSONString(Appendable out) throws IOException {
+        toJSONObject().writeJSONString(out);
+    }
+
+    public void writeJSONString(Appendable out, JSONStyle compression) throws IOException {
+        toJSONObject().writeJSONString(out, compression);
+    }
+
+    private JSONObject toJSONObject() {
+        JSONObject object = new JSONObject();
+        object.put("field", this.field);
+        object.put("op", this.op.toString());
+        object.put("value", this.value);
+        object.put("any", this.anyValue);
+
+        return object;
     }
 }

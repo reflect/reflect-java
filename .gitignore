@@ -1,6 +1,10 @@
+.classpath
+.project
+.settings/
 .gradletasknamecache
 .gradle/
 .idea/
+bin/
 build/
 gradle/
 *.iml
