@@ -95,7 +95,7 @@ public class TokenBuilder {
      * @param value the attribute's value, which must be serializable to JSON
      * @return this token builder
      */
-    public TokenBuilder putAttribute(String name, Object value) {
+    public TokenBuilder setAttribute(String name, Object value) {
         this.attributes.put(name, value);
         return this;
     }
@@ -109,7 +109,7 @@ public class TokenBuilder {
      * @throws TokenEncryptionException if the encryption fails
      */
     public String build(String secretKey) throws TokenEncryptionException {
-        SecretKey secret = TokenUtil.secretKeyFromUUID(secretKey);
+        SecretKey secret = SecretKeyUtils.secretKeyFromUUID(secretKey);
 
         JWEHeader header = new JWEHeader.Builder(JWEAlgorithm.DIR, EncryptionMethod.A128GCM)
                 .compressionAlgorithm(CompressionAlgorithm.DEF)

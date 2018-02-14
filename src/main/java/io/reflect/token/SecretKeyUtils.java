@@ -6,7 +6,7 @@ import java.util.UUID;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
-final class TokenUtil {
+final class SecretKeyUtils {
     static SecretKey secretKeyFromUUID(String uuid) {
         try {
             UUID secretKeyUUID = UUID.fromString(uuid);

@@ -36,7 +36,7 @@ public class TokenBuilderTest {
         EncryptedJWT jwt = EncryptedJWT.parse(token);
         assertEquals(kp.accessKey, jwt.getHeader().getKeyID());
 
-        jwt.decrypt(new DirectDecrypter(TokenUtil.secretKeyFromUUID(kp.secretKey)));
+        jwt.decrypt(new DirectDecrypter(SecretKeyUtils.secretKeyFromUUID(kp.secretKey)));
     }
 
     @Test
@@ -52,7 +52,7 @@ public class TokenBuilderTest {
         EncryptedJWT jwt = EncryptedJWT.parse(token);
         assertEquals(kp.accessKey, jwt.getHeader().getKeyID());
 
-        jwt.decrypt(new DirectDecrypter(TokenUtil.secretKeyFromUUID(kp.secretKey)));
+        jwt.decrypt(new DirectDecrypter(SecretKeyUtils.secretKeyFromUUID(kp.secretKey)));
 
         JWTClaimsSet claims = jwt.getJWTClaimsSet();
         assertTrue("token is not yet valid", claims.getNotBeforeTime().before(new Date()));
@@ -69,15 +69,15 @@ public class TokenBuilderTest {
 
         String token = new TokenBuilder(kp.accessKey)
                 .addViewIdentifier("SecUr3View1D")
-                .putAttribute("user-id", 1234)
-                .putAttribute("user-name", "Billy Bob")
+                .setAttribute("user-id", 1234)
+                .setAttribute("user-name", "Billy Bob")
                 .addParameter(parameter)
                 .build(kp.secretKey);
 
         EncryptedJWT jwt = EncryptedJWT.parse(token);
         assertEquals(kp.accessKey, jwt.getHeader().getKeyID());
 
-        jwt.decrypt(new DirectDecrypter(TokenUtil.secretKeyFromUUID(kp.secretKey)));
+        jwt.decrypt(new DirectDecrypter(SecretKeyUtils.secretKeyFromUUID(kp.secretKey)));
 
         JWTClaimsSet claims = jwt.getJWTClaimsSet();
         assertArrayEquals(new String[]{"SecUr3View1D"}, claims.getStringArrayClaim(TokenBuilder.VIEW_IDENTIFIERS_CLAIM_NAME));
